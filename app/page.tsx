@@ -1,65 +1,75 @@
-import Image from "next/image";
+import Link from 'next/link';
+import Layout from '@/components/Layout';
 
 export default function Home() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <Layout>
+      <div className="flex flex-col items-center justify-center min-h-[80vh] text-center px-4 py-8">
+        <div className="mb-6 md:mb-8 animate-bounce">
+          <span className="text-6xl sm:text-7xl md:text-9xl">🏰</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+
+        <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold mb-4 md:mb-6 bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent px-4">
+          Village Résistant
+        </h1>
+
+        <p className="text-lg sm:text-xl md:text-2xl text-gray-700 mb-3 md:mb-4 max-w-2xl px-4">
+          Protect your digital village from the tech empire using NIRD&apos;s smart and sustainable solutions
+        </p>
+
+        <p className="text-base sm:text-lg text-gray-600 mb-8 md:mb-12 max-w-xl px-4">
+          Learn how schools can maintain independence and sustainability with open-source solutions
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 w-full sm:w-auto px-4">
+          <Link
+            href="/game/start"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-green-500 to-blue-500 text-white text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 w-full sm:w-auto text-center"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Start the Game 🎮
+          </Link>
+
+          <Link
+            href="/scenarios"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-gradient-to-r from-purple-500 to-indigo-500 text-white text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 w-full sm:w-auto text-center"
           >
-            Documentation
-          </a>
+            Try Scenarios 🎯
+          </Link>
+
+          <Link
+            href="/learn"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-gray-800 text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300 border-2 border-gray-300 w-full sm:w-auto text-center"
+          >
+            Learn About NIRD 📚
+          </Link>
         </div>
-      </main>
-    </div>
+
+        <div className="mt-12 md:mt-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 max-w-4xl w-full px-4">
+          <div className="bg-white rounded-xl p-5 md:p-6 shadow-lg">
+            <div className="text-3xl md:text-4xl mb-2 md:mb-3">🛡️</div>
+            <h3 className="font-bold text-base md:text-lg mb-1 md:mb-2 text-gray-900">Digital Independence</h3>
+            <p className="text-gray-600 text-xs md:text-sm">
+              Break free from vendor lock-in and proprietary systems
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl p-5 md:p-6 shadow-lg">
+            <div className="text-3xl md:text-4xl mb-2 md:mb-3">♻️</div>
+            <h3 className="font-bold text-base md:text-lg mb-1 md:mb-2 text-gray-900">Reuse Hardware</h3>
+            <p className="text-gray-600 text-xs md:text-sm">
+              Give old computers new life with lightweight Linux
+            </p>
+          </div>
+
+          <div className="bg-white rounded-xl p-5 md:p-6 shadow-lg sm:col-span-2 md:col-span-1">
+            <div className="text-3xl md:text-4xl mb-2 md:mb-3">🔓</div>
+            <h3 className="font-bold text-base md:text-lg mb-1 md:mb-2 text-gray-900">Open Source</h3>
+            <p className="text-gray-600 text-xs md:text-sm">
+              Use free, transparent, and community-driven software
+            </p>
+          </div>
+        </div>
+      </div>
+    </Layout>
   );
 }
