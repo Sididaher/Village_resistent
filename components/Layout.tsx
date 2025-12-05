@@ -14,12 +14,12 @@ export default function Layout({ children, showNav = true }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { href: '/', label: 'Home', icon: '🏠' },
-    { href: '/dashboard', label: 'Dashboard', icon: '📊' },
-    { href: '/learn', label: 'Learn NIRD', icon: '📚' },
-    { href: '/challenges', label: 'Challenges', icon: '🎯' },
-    { href: '/badges', label: 'Badges', icon: '🏆' },
-    { href: '/community', label: 'Community', icon: '👥' },
+    { href: '/', label: 'Home' },
+    { href: '/dashboard', label: 'Dashboard' },
+    { href: '/learn', label: 'Learn NIRD' },
+    { href: '/challenges', label: 'Challenges' },
+    { href: '/badges', label: 'Badges' },
+    { href: '/community', label: 'Community' },
   ];
 
   const isActive = (href: string) => pathname === href;
@@ -32,10 +32,6 @@ export default function Layout({ children, showNav = true }: LayoutProps) {
             <div className="flex items-center justify-between h-16 md:h-20">
               {/* Logo */}
               <Link href="/" className="flex items-center gap-3 group">
-                <div className="relative">
-                  <span className="text-3xl md:text-4xl transition-transform duration-300 group-hover:scale-110 block">🏰</span>
-                  <div className="absolute -inset-2 bg-gradient-to-r from-green-400 to-blue-500 rounded-full blur-lg opacity-0 group-hover:opacity-30 transition-opacity duration-300" />
-                </div>
                 <span className="text-xl md:text-2xl font-black bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
                   Village Résistant
                 </span>
@@ -56,7 +52,6 @@ export default function Layout({ children, showNav = true }: LayoutProps) {
                     `}
                   >
                     <span className="flex items-center gap-2">
-                      <span className="text-lg">{link.icon}</span>
                       <span>{link.label}</span>
                     </span>
                     {isActive(link.href) && (
@@ -100,7 +95,6 @@ export default function Layout({ children, showNav = true }: LayoutProps) {
                     `}
                   >
                     <span className="flex items-center gap-3">
-                      <span className="text-xl">{link.icon}</span>
                       <span>{link.label}</span>
                     </span>
                   </Link>

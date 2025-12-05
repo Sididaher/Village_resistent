@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Button } from "./index";
+import Button from "./Button";
 
 interface CreativeHeroProps {
   onGetStarted: () => void;
@@ -24,11 +24,11 @@ export default function CreativeHero({ onGetStarted }: CreativeHeroProps) {
 
   useEffect(() => {
     setIsClient(true);
-    
+
     const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({ 
-        x: (e.clientX / window.innerWidth) * 100, 
-        y: (e.clientY / window.innerHeight) * 100 
+      setMousePosition({
+        x: (e.clientX / window.innerWidth) * 100,
+        y: (e.clientY / window.innerHeight) * 100
       });
     };
 
@@ -49,7 +49,7 @@ export default function CreativeHero({ onGetStarted }: CreativeHeroProps) {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-emerald-900">
       {/* Animated Background Gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-purple-600/20 via-emerald-600/20 to-blue-600/20 animate-pulse" />
-      
+
       {/* Geometric Patterns */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-10 left-10 w-32 h-32 border border-white/20 rounded-lg rotate-12 animate-spin-slow" />
@@ -81,8 +81,8 @@ export default function CreativeHero({ onGetStarted }: CreativeHeroProps) {
       <div className="relative z-20 text-center px-6 max-w-6xl mx-auto">
         {/* Hero Badge */}
         <div className="inline-flex items-center gap-3 text-white px-8 py-4 rounded-full text-sm font-semibold mb-8 hover:bg-white/15 transition-all duration-300 group">
-        
-    
+
+
         </div>
 
         {/* Main Title */}
@@ -133,7 +133,7 @@ export default function CreativeHero({ onGetStarted }: CreativeHeroProps) {
               <span className="text-2xl group-hover:translate-x-1 transition-transform duration-300">→</span>
             </span>
           </Button>
-          
+
           <Button
             onClick={() => {
               window.open('https://nird.forge.apps.education.fr/', '_blank');
@@ -151,23 +151,23 @@ export default function CreativeHero({ onGetStarted }: CreativeHeroProps) {
         {/* Feature Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-16">
           {[
-            { 
-              icon: "🎯", 
-              title: "Diagnostic Interactif", 
+            {
+              icon: "🎯",
+              title: "Diagnostic Interactif",
               desc: "Évaluez votre niveau d'autonomie numérique",
               color: "from-purple-500/20 to-purple-600/20",
               delay: "0s"
             },
-            { 
-              icon: "💰", 
-              title: "Simulateur de Coûts", 
+            {
+              icon: "💰",
+              title: "Simulateur de Coûts",
               desc: "Calculez vos économies potentielles",
               color: "from-emerald-500/20 to-emerald-600/20",
               delay: "0.2s"
             },
-            { 
-              icon: "🏫", 
-              title: "Success Stories", 
+            {
+              icon: "🏫",
+              title: "Success Stories",
               desc: "Inspirez-vous du Lycée Carnot",
               color: "from-blue-500/20 to-blue-600/20",
               delay: "0.4s"

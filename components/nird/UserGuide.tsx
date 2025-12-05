@@ -24,8 +24,8 @@ export default function UserGuide() {
           <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-xl border border-blue-200">
             <h3 className="text-xl font-bold text-blue-900 mb-3">🎯 Objectif de la plateforme</h3>
             <p className="text-blue-800 leading-relaxed">
-              Cette application web interactive vous guide dans la découverte et l'adoption de la démarche NIRD 
-              (Numérique Inclusif, Responsable et Durable). Elle propose un parcours complet pour libérer 
+              Cette application web interactive vous guide dans la découverte et l'adoption de la démarche NIRD
+              (Numérique Inclusif, Responsable et Durable). Elle propose un parcours complet pour libérer
               votre établissement scolaire de la dépendance aux Big Tech.
             </p>
           </div>
@@ -64,7 +64,7 @@ export default function UserGuide() {
         <div className="space-y-6">
           <div className="bg-blue-50 p-6 rounded-xl">
             <h3 className="text-xl font-bold text-blue-900 mb-4">🗺️ Structure de la plateforme</h3>
-            
+
             <div className="space-y-4">
               <div className="flex items-start gap-4 p-4 bg-white rounded-lg shadow-sm">
                 <span className="text-2xl">🏠</span>
@@ -184,7 +184,7 @@ export default function UserGuide() {
         <div className="space-y-6">
           <div className="bg-blue-50 p-6 rounded-xl">
             <h3 className="text-xl font-bold text-blue-900 mb-4">📋 Les 5 étapes du parcours NIRD</h3>
-            
+
             <div className="space-y-4">
               {[
                 {
@@ -195,7 +195,7 @@ export default function UserGuide() {
                   time: "2 min"
                 },
                 {
-                  step: "2", 
+                  step: "2",
                   title: "Diagnostic",
                   icon: "🎯",
                   desc: "Évaluation de votre niveau d'autonomie numérique",
@@ -203,7 +203,7 @@ export default function UserGuide() {
                 },
                 {
                   step: "3",
-                  title: "Simulation", 
+                  title: "Simulation",
                   icon: "💰",
                   desc: "Calcul de vos économies et impact environnemental",
                   time: "3 min"
@@ -211,7 +211,7 @@ export default function UserGuide() {
                 {
                   step: "4",
                   title: "Inspiration",
-                  icon: "🏫", 
+                  icon: "🏫",
                   desc: "Success stories du lycée Carnot",
                   time: "4 min"
                 },
@@ -239,7 +239,7 @@ export default function UserGuide() {
 
             <div className="mt-6 p-4 bg-green-100 rounded-lg">
               <p className="text-green-800 text-sm">
-                <strong>💡 Conseil :</strong> Le parcours est conçu pour être complété en 15 minutes. 
+                <strong>💡 Conseil :</strong> Le parcours est conçu pour être complété en 15 minutes.
                 Vos progrès sont sauvegardés et vous pouvez reprendre à tout moment.
               </p>
             </div>
@@ -436,21 +436,20 @@ export default function UserGuide() {
               </div>
             </div>
 
-            <div className="flex h-[calc(90vh-120px)]">
+            <div className="flex flex-col md:flex-row h-[calc(90vh-120px)]">
               {/* Sidebar */}
-              <div className="w-64 bg-gray-50 border-r overflow-y-auto">
+              <div className="w-full md:w-64 bg-gray-50 border-r overflow-y-auto md:h-full h-1/3">
                 <div className="p-4">
-                  <h3 className="font-bold text-gray-900 mb-4">Sommaire</h3>
+                  <h3 className="font-bold text-gray-900 mb-4 sticky top-0 bg-gray-50 z-10">Sommaire</h3>
                   <nav className="space-y-2">
                     {sections.map((section) => (
                       <button
                         key={section.id}
                         onClick={() => setActiveSection(section.id)}
-                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-                          activeSection === section.id
+                        className={`w-full text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${activeSection === section.id
                             ? "bg-blue-500 text-white"
                             : "text-gray-700 hover:bg-gray-200"
-                        }`}
+                          }`}
                       >
                         <span className="mr-2">{section.icon}</span>
                         {section.title}
@@ -461,10 +460,10 @@ export default function UserGuide() {
               </div>
 
               {/* Content */}
-              <div className="flex-1 overflow-y-auto">
-                <div className="p-8">
-                  <h2 className="text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                    <span className="text-4xl">{currentSection?.icon}</span>
+              <div className="flex-1 overflow-y-auto md:h-full h-2/3">
+                <div className="p-4 md:p-8">
+                  <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-6 flex items-center gap-3">
+                    <span className="text-3xl md:text-4xl">{currentSection?.icon}</span>
                     {currentSection?.title}
                   </h2>
                   {currentSection?.content}

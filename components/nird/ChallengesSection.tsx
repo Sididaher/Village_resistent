@@ -18,10 +18,10 @@ interface GameProgress {
 export default function ChallengesSection() {
   const [gameProgress, setGameProgress] = useState<GameProgress>({});
   const [currentGame, setCurrentGame] = useState<string | null>(null);
-  const [currentMiniGame, setCurrentMiniGame] = useState<{id: string, title: string, description: string} | null>(null);
+  const [currentMiniGame, setCurrentMiniGame] = useState<{ id: string, title: string, description: string } | null>(null);
   const [totalScore, setTotalScore] = useState(0);
   const [showLeaderboard, setShowLeaderboard] = useState(false);
-  const [toast, setToast] = useState<{message: string, type: "success" | "info" | "warning" | "error", isVisible: boolean}>({
+  const [toast, setToast] = useState<{ message: string, type: "success" | "info" | "warning" | "error", isVisible: boolean }>({
     message: "",
     type: "success",
     isVisible: false
@@ -104,7 +104,7 @@ export default function ChallengesSection() {
       showToast("🔒 Ce défi est verrouillé ! Complétez les défis précédents pour le débloquer.", "warning");
       return;
     }
-    
+
     if (gameId === "quiz-nird") {
       setCurrentGame("quiz");
     } else {
@@ -119,7 +119,7 @@ export default function ChallengesSection() {
 
   const handleMiniGameComplete = (score: number) => {
     if (!currentMiniGame) return;
-    
+
     const newProgress = {
       ...gameProgress,
       [currentMiniGame.id]: {
@@ -131,10 +131,10 @@ export default function ChallengesSection() {
     setGameProgress(newProgress);
     setTotalScore(totalScore + score);
     setCurrentMiniGame(null);
-    
+
     // Afficher toast de félicitations
     showToast(`🎉 Défi "${currentMiniGame.title}" terminé ! +${score} points !`, "success");
-    
+
     // Vérifier si de nouveaux défis sont débloqués
     setTimeout(() => {
       const unlockedCount = Object.keys(newProgress).filter(key => newProgress[key]?.completed).length;
@@ -156,10 +156,10 @@ export default function ChallengesSection() {
     setGameProgress(newProgress);
     setTotalScore(totalScore + score);
     setCurrentGame(null);
-    
+
     // Afficher toast de félicitations
     showToast(`🎉 Quiz NIRD Expert terminé ! +${score} points !`, "success");
-    
+
     // Débloquer les jeux suivants
     setTimeout(() => {
       showToast("🔓 De nouveaux défis sont maintenant débloqués !", "info");
@@ -206,10 +206,10 @@ export default function ChallengesSection() {
             Relevez nos défis ludiques et interactifs pour devenir un expert de la démarche NIRD !
             Apprenez en vous amusant et déverrouillez de nouveaux contenus.
           </p>
-          
+
           {/* Tableau de bord du joueur */}
           <div className="bg-white rounded-2xl shadow-xl p-8 max-w-4xl mx-auto border-2 border-purple-100">
-            <div className="grid md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
               <div className="text-center">
                 <div className="text-3xl font-bold text-purple-600 mb-2">{totalScore}</div>
                 <div className="text-sm text-gray-600">Points Total</div>
@@ -227,7 +227,7 @@ export default function ChallengesSection() {
                 <div className="text-sm text-gray-600">Niveau Actuel</div>
               </div>
             </div>
-            
+
             {/* Barre de progression globale */}
             <div className="mt-6">
               <div className="flex justify-between items-center mb-2">
@@ -235,7 +235,7 @@ export default function ChallengesSection() {
                 <span className="text-sm text-gray-500">{completedGames}/{totalGames} défis</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
+                <div
                   className="bg-gradient-to-r from-purple-500 to-emerald-500 h-3 rounded-full transition-all duration-1000 ease-out"
                   style={{ width: `${progressPercentage}%` }}
                 />
@@ -246,7 +246,7 @@ export default function ChallengesSection() {
 
         {/* Actions rapides */}
         <div className="flex flex-wrap justify-center gap-4 mb-12">
-          <Button 
+          <Button
             onClick={() => setShowLeaderboard(!showLeaderboard)}
             variant="outline"
             className="border-purple-500 text-purple-600 hover:bg-purple-50"
@@ -254,14 +254,14 @@ export default function ChallengesSection() {
             <span className="mr-2">🏆</span>
             Classement
           </Button>
-          <Button 
+          <Button
             variant="outline"
             className="border-emerald-500 text-emerald-600 hover:bg-emerald-50"
           >
             <span className="mr-2">📊</span>
             Mes Statistiques
           </Button>
-          <Button 
+          <Button
             variant="outline"
             className="border-teal-500 text-teal-600 hover:bg-teal-50"
           >
@@ -293,11 +293,11 @@ export default function ChallengesSection() {
           <div className="bg-gradient-to-r from-purple-600 to-emerald-600 rounded-2xl p-8 text-white max-w-2xl mx-auto">
             <h3 className="text-2xl font-bold mb-4">🚀 Continuez l'aventure !</h3>
             <p className="text-lg opacity-90 mb-6">
-              Chaque défi complété vous rapproche d'un numérique plus libre et durable. 
+              Chaque défi complété vous rapproche d'un numérique plus libre et durable.
               Relevez tous les défis pour devenir un Maître NIRD !
             </p>
             <div className="flex justify-center">
-              <Button 
+              <Button
                 onClick={() => handleGameClick("quiz-nird")}
                 className="bg-white text-purple-700 hover:bg-gray-100"
               >
@@ -316,7 +316,7 @@ export default function ChallengesSection() {
 
       {/* Modal des Mini-Jeux */}
       {currentMiniGame && (
-        <MiniGame 
+        <MiniGame
           gameId={currentMiniGame.id}
           title={currentMiniGame.title}
           description={currentMiniGame.description}
@@ -326,7 +326,7 @@ export default function ChallengesSection() {
       )}
 
       {/* Toast de notifications */}
-      <Toast 
+      <Toast
         message={toast.message}
         type={toast.type}
         isVisible={toast.isVisible}

@@ -52,7 +52,7 @@ export default function Testimonials() {
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
+
     const interval = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % testimonials.length);
     }, 5000);
@@ -98,7 +98,7 @@ export default function Testimonials() {
               <div className="absolute top-6 left-6 text-8xl text-purple-100 font-serif leading-none">
                 &ldquo;
               </div>
-              
+
               <div className="relative z-10">
                 {/* Contenu du témoignage */}
                 <div className="min-h-[120px] flex items-center justify-center mb-8">
@@ -142,11 +142,10 @@ export default function Testimonials() {
                 <button
                   key={index}
                   onClick={() => handleDotClick(index)}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                    index === activeIndex
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${index === activeIndex
                       ? "bg-gradient-to-r from-purple-500 to-emerald-500 w-8"
                       : "bg-gray-300 hover:bg-gray-400"
-                  }`}
+                    }`}
                   aria-label={`Témoignage ${index + 1}`}
                 />
               ))}
@@ -158,10 +157,10 @@ export default function Testimonials() {
                 setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
                 setIsAutoPlaying(false);
               }}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors group"
+              className="absolute left-0 top-1/2 -translate-y-1/2 translate-x-2 md:-translate-x-12 w-10 h-10 md:w-12 md:h-12 bg-white/80 md:bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors group z-20"
               aria-label="Témoignage précédent"
             >
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-600 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
             </button>
@@ -170,10 +169,10 @@ export default function Testimonials() {
                 setActiveIndex((prev) => (prev + 1) % testimonials.length);
                 setIsAutoPlaying(false);
               }}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-12 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors group"
+              className="absolute right-0 top-1/2 -translate-y-1/2 -translate-x-2 md:translate-x-12 w-10 h-10 md:w-12 md:h-12 bg-white/80 md:bg-white rounded-full shadow-lg flex items-center justify-center hover:bg-purple-50 transition-colors group z-20"
               aria-label="Témoignage suivant"
             >
-              <svg className="w-6 h-6 text-gray-600 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 md:w-6 md:h-6 text-gray-600 group-hover:text-purple-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -186,11 +185,10 @@ export default function Testimonials() {
             <button
               key={testimonial.id}
               onClick={() => handleDotClick(index)}
-              className={`p-4 rounded-2xl transition-all duration-300 text-left ${
-                index === activeIndex
+              className={`p-4 rounded-2xl transition-all duration-300 text-left ${index === activeIndex
                   ? "bg-gradient-to-br from-purple-500 to-emerald-500 text-white shadow-lg scale-105"
                   : "bg-white hover:bg-gray-50 shadow-md hover:shadow-lg"
-              }`}
+                }`}
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-2xl">{testimonial.avatar}</span>

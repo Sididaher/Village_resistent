@@ -222,7 +222,7 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
       const totalScore = newAnswers.reduce((sum, answerIndex, questionIndex) => {
         return sum + diagnosticQuestions[questionIndex].options[answerIndex].score;
       }, 0);
-      
+
       const result = getResultLevel(totalScore);
       onComplete(result);
     }
@@ -244,15 +244,15 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
 
   return (
     <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+      <div className="bg-white rounded-3xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto flex flex-col">
         {/* En-tête */}
-        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6 rounded-t-3xl relative overflow-hidden">
+        <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 md:p-6 rounded-t-3xl relative overflow-hidden flex-shrink-0">
           <div className="absolute inset-0 bg-white/10 backdrop-blur-sm"></div>
           <div className="relative z-10">
             <div className="flex justify-between items-center mb-4">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">🎯</span>
-                <h2 className="text-2xl font-bold">Diagnostic NIRD</h2>
+                <span className="text-xl md:text-2xl">🎯</span>
+                <h2 className="text-xl md:text-2xl font-bold">Diagnostic NIRD</h2>
               </div>
               <button
                 onClick={onClose}
@@ -261,19 +261,19 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
                 ✕
               </button>
             </div>
-            
-            <p className="text-white/90 mb-4">
+
+            <p className="text-white/90 mb-4 text-sm md:text-base">
               Évaluez le niveau d'autonomie numérique de votre établissement
             </p>
-            
+
             {/* Barre de progression */}
-            <div className="mb-4">
+            <div className="mb-2">
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm opacity-90">Question {currentQuestion + 1}/{diagnosticQuestions.length}</span>
-                <span className="text-sm opacity-90">{Math.round(progress)}% complété</span>
+                <span className="text-xs md:text-sm opacity-90">Question {currentQuestion + 1}/{diagnosticQuestions.length}</span>
+                <span className="text-xs md:text-sm opacity-90">{Math.round(progress)}% complété</span>
               </div>
               <div className="w-full bg-white/20 rounded-full h-2">
-                <div 
+                <div
                   className="bg-white h-2 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
                 ></div>
@@ -283,49 +283,48 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
         </div>
 
         {/* Contenu de la question */}
-        <div className="p-8">
-          <div className="mb-8">
+        <div className="p-4 md:p-8 overflow-y-auto">
+          <div className="mb-6 md:mb-8">
             <div className="flex items-center gap-3 mb-4">
-              <span className="text-3xl">{getCategoryIcon(currentQ.category)}</span>
-              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold capitalize">
+              <span className="text-2xl md:text-3xl">{getCategoryIcon(currentQ.category)}</span>
+              <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-xs md:text-sm font-bold capitalize">
                 {currentQ.category}
               </span>
             </div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-6 leading-relaxed">
+            <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6 leading-relaxed">
               {currentQ.question}
             </h3>
           </div>
 
           {/* Options de réponse */}
-          <div className="grid gap-4 mb-8">
+          <div className="grid gap-3 md:gap-4 mb-6 md:mb-8">
             {currentQ.options.map((option, index) => (
               <button
                 key={index}
                 onClick={() => handleAnswerSelect(index)}
-                className={`p-4 text-left rounded-xl border-2 transition-all duration-300 ${
-                  selectedAnswer === index
+                className={`p-3 md:p-4 text-left rounded-xl border-2 transition-all duration-300 ${selectedAnswer === index
                     ? 'border-blue-500 bg-blue-50 text-blue-900'
                     : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50'
-                } cursor-pointer hover:scale-105`}
+                  } cursor-pointer hover:scale-[1.02] active:scale-95`}
               >
-                <div className="flex items-center">
-                  <div className={`w-6 h-6 rounded-full border-2 mr-4 flex-shrink-0 ${
-                    selectedAnswer === index 
-                      ? 'border-blue-500 bg-blue-500' 
+                <div className="flex items-start md:items-center">
+                  <div className={`w-5 h-5 md:w-6 md:h-6 rounded-full border-2 mr-3 md:mr-4 flex-shrink-0 mt-1 md:mt-0 ${selectedAnswer === index
+                      ? 'border-blue-500 bg-blue-500'
                       : 'border-gray-300'
-                  }`}>
+                    }`}>
                     {selectedAnswer === index && (
                       <div className="w-full h-full flex items-center justify-center">
-                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                        <div className="w-1.5 h-1.5 md:w-2 md:h-2 bg-white rounded-full"></div>
                       </div>
                     )}
                   </div>
-                  <span className="flex-1 font-medium">{option.text}</span>
-                  <div className={`ml-4 px-2 py-1 rounded text-xs font-bold ${
-                    option.category === 'autonomie' ? 'bg-green-100 text-green-700' :
-                    option.category === 'sensibilisation' ? 'bg-yellow-100 text-yellow-700' :
-                    'bg-red-100 text-red-700'
-                  }`}>
+                  <div className="flex-1">
+                    <span className="font-medium text-sm md:text-base block">{option.text}</span>
+                  </div>
+                  <div className={`ml-2 md:ml-4 px-2 py-1 rounded text-[10px] md:text-xs font-bold whitespace-nowrap ${option.category === 'autonomie' ? 'bg-green-100 text-green-700' :
+                      option.category === 'sensibilisation' ? 'bg-yellow-100 text-yellow-700' :
+                        'bg-red-100 text-red-700'
+                    }`}>
                     {option.score}/5
                   </div>
                 </div>
@@ -334,15 +333,14 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
           </div>
 
           {/* Bouton suivant */}
-          <div className="flex justify-end">
+          <div className="flex justify-end sticky bottom-0 bg-white pt-2 pb-2 md:pb-0">
             <Button
               onClick={handleNextQuestion}
               disabled={selectedAnswer === null}
-              className={`px-8 py-3 ${
-                selectedAnswer === null 
-                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed' 
+              className={`w-full md:w-auto px-6 md:px-8 py-3 ${selectedAnswer === null
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
                   : 'bg-gradient-to-r from-blue-600 to-purple-600 text-white hover:from-blue-700 hover:to-purple-700'
-              } transition-all duration-300`}
+                } transition-all duration-300 rounded-xl font-bold shadow-lg`}
             >
               {currentQuestion < diagnosticQuestions.length - 1 ? (
                 <>Question suivante →</>
@@ -353,8 +351,8 @@ export default function DiagnosticQuiz({ onComplete, onClose }: DiagnosticQuizPr
           </div>
 
           {/* Aide contextuelle */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-xl">
-            <p className="text-sm text-gray-600 leading-relaxed">
+          <div className="mt-4 md:mt-6 p-3 md:p-4 bg-gray-50 rounded-xl hidden md:block">
+            <p className="text-xs md:text-sm text-gray-600 leading-relaxed">
               💡 <strong>Astuce :</strong> Soyez honnête dans vos réponses pour obtenir un diagnostic précis et des recommandations personnalisées adaptées à votre situation.
             </p>
           </div>

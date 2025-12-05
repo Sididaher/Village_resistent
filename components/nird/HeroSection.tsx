@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "./index";
+import Button from "./Button";
 
 interface HeroSectionProps {
   onGetStarted: () => void;

@@ -90,7 +90,7 @@ export default function InteractiveJourney() {
   const handleStepClick = (stepIndex: number) => {
     if (stepIndex === 0 || steps[stepIndex - 1]?.completed) {
       setCurrentStep(stepIndex);
-      
+
       // Ouvrir le composant associé
       const step = steps[stepIndex];
       if (step.component) {
@@ -149,7 +149,7 @@ export default function InteractiveJourney() {
           <div className="flex items-center justify-between relative">
             {/* Ligne de progression */}
             <div className="absolute top-6 left-0 right-0 h-1 bg-gray-200 rounded-full">
-              <div 
+              <div
                 className="h-full bg-gradient-to-r from-purple-500 to-blue-500 rounded-full transition-all duration-1000"
                 style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
               />
@@ -167,13 +167,12 @@ export default function InteractiveJourney() {
                   >
                     {step.completed ? "✓" : step.icon}
                   </button>
-                  
-                  <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center w-32">
-                    <div className={`text-sm font-medium ${
-                      status === "current" ? "text-blue-600" : 
-                      status === "completed" ? "text-green-600" : 
-                      status === "locked" ? "text-gray-400" : "text-gray-700"
-                    }`}>
+
+                  <div className="absolute top-16 left-1/2 transform -translate-x-1/2 text-center w-32 hidden md:block">
+                    <div className={`text-sm font-medium ${status === "current" ? "text-blue-600" :
+                        status === "completed" ? "text-green-600" :
+                          status === "locked" ? "text-gray-400" : "text-gray-700"
+                      }`}>
                       {step.title}
                     </div>
                   </div>
@@ -192,10 +191,10 @@ export default function InteractiveJourney() {
                 Libérez votre établissement des Big Tech !
               </h3>
               <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Découvrez comment le lycée Carnot a économisé 120.000€ et réduit de 60% son empreinte carbone 
+                Découvrez comment le lycée Carnot a économisé 120.000€ et réduit de 60% son empreinte carbone
                 en adoptant la démarche NIRD. Votre établissement peut faire de même !
               </p>
-              
+
               <div className="grid md:grid-cols-3 gap-6 mb-8">
                 <div className="p-4 bg-blue-50 rounded-xl">
                   <div className="text-3xl mb-2">📊</div>
@@ -214,14 +213,14 @@ export default function InteractiveJourney() {
                 </div>
               </div>
 
-              <Button 
+              <Button
                 onClick={handleStartJourney}
                 size="lg"
                 className="bg-gradient-to-r from-purple-600 to-blue-600 text-white px-8 py-4 text-lg"
               >
                 🗺️ Commencer le parcours (15 min)
               </Button>
-              
+
               <p className="text-sm text-gray-500 mt-4">
                 Parcours gratuit • Résultats personnalisés • Aucune donnée collectée
               </p>
@@ -236,7 +235,7 @@ export default function InteractiveJourney() {
                   Diagnostic de votre établissement
                 </h3>
                 <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-                  6 questions pour évaluer votre niveau de dépendance aux solutions propriétaires 
+                  6 questions pour évaluer votre niveau de dépendance aux solutions propriétaires
                   et identifier vos axes d'amélioration prioritaires.
                 </p>
               </div>
@@ -247,7 +246,7 @@ export default function InteractiveJourney() {
                     <span className="text-2xl">📊</span>
                     Score: {diagnosticResult.score}% - {diagnosticResult.level}
                   </div>
-                  
+
                   <div className="grid md:grid-cols-2 gap-6 mb-8">
                     <div className="bg-blue-50 p-6 rounded-xl">
                       <h4 className="font-bold text-blue-900 mb-4">🎯 Recommandations</h4>
@@ -260,7 +259,7 @@ export default function InteractiveJourney() {
                         ))}
                       </ul>
                     </div>
-                    
+
                     <div className="bg-green-50 p-6 rounded-xl">
                       <h4 className="font-bold text-green-900 mb-4">🚀 Prochaines étapes</h4>
                       <ul className="text-green-700 text-sm space-y-2">
@@ -275,14 +274,14 @@ export default function InteractiveJourney() {
                   </div>
 
                   <div className="flex gap-4 justify-center">
-                    <Button 
+                    <Button
                       onClick={() => setShowDiagnostic(true)}
                       variant="outline"
                       className="border-blue-500 text-blue-600"
                     >
                       🔄 Refaire le diagnostic
                     </Button>
-                    <Button 
+                    <Button
                       onClick={() => setCurrentStep(2)}
                       className="bg-gradient-to-r from-blue-600 to-green-600 text-white"
                     >
@@ -292,7 +291,7 @@ export default function InteractiveJourney() {
                 </div>
               ) : (
                 <div className="text-center">
-                  <Button 
+                  <Button
                     onClick={() => setShowDiagnostic(true)}
                     size="lg"
                     className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4"
@@ -316,9 +315,9 @@ export default function InteractiveJourney() {
                 </p>
               </div>
               <CostSimulator />
-              
+
               <div className="text-center mt-8">
-                <Button 
+                <Button
                   onClick={() => setCurrentStep(3)}
                   className="bg-gradient-to-r from-green-600 to-blue-600 text-white px-8 py-4"
                 >
@@ -332,7 +331,7 @@ export default function InteractiveJourney() {
             <div>
               <CarnotSuccessStories />
               <div className="text-center mt-8">
-                <Button 
+                <Button
                   onClick={() => setCurrentStep(4)}
                   size="lg"
                   className="bg-gradient-to-r from-purple-600 to-green-600 text-white px-8 py-4"
@@ -426,7 +425,7 @@ export default function InteractiveJourney() {
 
       {/* Modal du diagnostic */}
       {showDiagnostic && (
-        <DiagnosticQuiz 
+        <DiagnosticQuiz
           onComplete={handleDiagnosticComplete}
           onClose={() => setShowDiagnostic(false)}
         />
