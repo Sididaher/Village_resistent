@@ -5,13 +5,18 @@ import Layout from '@/components/Layout';
 import ChallengeCard from '@/components/ChallengeCard';
 import { challenges } from '@/lib/data/challenges';
 import { getUserStats } from '@/lib/utils/challengeStorage';
-import { BarChart3, Star, Flame } from 'lucide-react';
+import { getUserLevel } from '@/lib/utils/levelSystem';
+import { getEarnedBadges } from '@/lib/utils/badgeSystem';
+import LevelDisplay from '@/components/LevelDisplay';
+import { BarChart3, Star, Flame, Trophy } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ChallengesPage() {
   const [completedChallenges, setCompletedChallenges] = useState<number[]>([]);
   const [totalXP, setTotalXP] = useState(0);
   const [streak, setStreak] = useState(0);
+  const [userLevel, setUserLevel] = useState(getUserLevel(0));
+  const [earnedBadges, setEarnedBadges] = useState<string[]>([]);
 
   useEffect(() => {
     // Load stats from localStorage
@@ -19,6 +24,8 @@ export default function ChallengesPage() {
     setCompletedChallenges(stats.completedChallenges);
     setTotalXP(stats.totalXP);
     setStreak(stats.streak);
+    setUserLevel(getUserLevel(stats.totalXP));
+    setEarnedBadges(getEarnedBadges());
   }, []);
 
   // Refresh stats when returning from detail page
@@ -28,6 +35,8 @@ export default function ChallengesPage() {
       setCompletedChallenges(stats.completedChallenges);
       setTotalXP(stats.totalXP);
       setStreak(stats.streak);
+      setUserLevel(getUserLevel(stats.totalXP));
+      setEarnedBadges(getEarnedBadges());
     };
     
     window.addEventListener('focus', handleFocus);
@@ -53,8 +62,13 @@ export default function ChallengesPage() {
             </p>
           </div>
 
+          {/* Level Display */}
+          <div className="bg-white rounded-xl md:rounded-2xl shadow-xl p-6 md:p-8 mb-6 border-2 border-gray-200">
+            <LevelDisplay level={userLevel} showProgress={true} />
+          </div>
+
           {/* Stats */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 md:mb-12">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-8 md:mb-12">
             <div className="bg-gradient-to-br from-blue-500 to-indigo-600 text-white rounded-xl p-5 md:p-6 shadow-lg">
               <BarChart3 className="w-10 h-10 md:w-12 md:h-12 mb-2" />
               <div className="text-2xl sm:text-3xl font-bold mb-1">{completedChallenges.length}</div>
@@ -70,6 +84,22 @@ export default function ChallengesPage() {
               <div className="text-2xl sm:text-3xl font-bold mb-1">{streak}</div>
               <div className="text-sm sm:text-base opacity-90">Day Streak</div>
             </div>
+            <div className="bg-gradient-to-br from-yellow-500 to-amber-600 text-white rounded-xl p-5 md:p-6 shadow-lg">
+              <Trophy className="w-10 h-10 md:w-12 md:h-12 mb-2" />
+              <div className="text-2xl sm:text-3xl font-bold mb-1">{earnedBadges.length}</div>
+              <div className="text-sm sm:text-base opacity-90">Badges Earned</div>
+            </div>
+          </div>
+
+          {/* Quick Link to Badges */}
+          <div className="mb-8 text-center">
+            <Link
+              href="/badges"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+            >
+              <Trophy className="w-5 h-5" />
+              View All Badges
+            </Link>
           </div>
 
           {/* Easy Challenges */}
@@ -129,20 +159,20 @@ export default function ChallengesPage() {
             </div>
           </section>
 
-          {/* CTA to scenarios */}
-          <div className="bg-gradient-to-r from-indigo-500 to-purple-600 rounded-xl md:rounded-2xl p-6 sm:p-8 md:p-10 text-center text-white shadow-2xl">
-            <span className="text-5xl sm:text-6xl mb-4 block">🎮</span>
+          {/* CTA to Learn NIRD */}
+          <div className="bg-gradient-to-r from-purple-500 via-emerald-500 to-blue-500 rounded-xl md:rounded-2xl p-6 sm:p-8 md:p-10 text-center text-white shadow-2xl">
+            <span className="text-5xl sm:text-6xl mb-4 block">📚</span>
             <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold mb-4">
-              Ready for Interactive Scenarios?
+              Ready to Learn NIRD Principles?
             </h2>
             <p className="text-base sm:text-lg mb-6 max-w-2xl mx-auto opacity-90">
-              Test your decision-making skills with real-world situations. Make choices, see consequences, and learn from experience!
+              Discover interactive games and challenges about digital independence, sustainability, and open-source solutions!
             </p>
             <Link
-              href="/scenarios"
-              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-white text-indigo-600 text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
+              href="/learn"
+              className="inline-block px-6 sm:px-8 py-3 sm:py-4 bg-white text-purple-600 text-base sm:text-lg font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all duration-300"
             >
-              Try Scenarios 🎯
+              Explore NIRD Learning ✨
             </Link>
           </div>
         </div>

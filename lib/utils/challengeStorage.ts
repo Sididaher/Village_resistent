@@ -14,6 +14,8 @@ export interface UserStats {
   totalXP: number;
   streak: number;
   lastActivityDate: string;
+  earnedBadges: string[]; // Array of badge IDs
+  level: number;
 }
 
 const STORAGE_KEY_PROGRESS = 'village-res-challenge-progress';
@@ -59,7 +61,9 @@ export function getUserStats(): UserStats {
       completedChallenges: [],
       totalXP: 0,
       streak: 0,
-      lastActivityDate: ''
+      lastActivityDate: '',
+      earnedBadges: [],
+      level: 1
     };
   }
   
@@ -70,26 +74,35 @@ export function getUserStats(): UserStats {
         completedChallenges: [],
         totalXP: 0,
         streak: 0,
-        lastActivityDate: ''
+        lastActivityDate: '',
+        earnedBadges: [],
+        level: 1
       };
     }
-    return JSON.parse(stored);
+    const stats = JSON.parse(stored);
+    // Ensure backward compatibility
+    if (!stats.earnedBadges) stats.earnedBadges = [];
+    if (!stats.level) stats.level = 1;
+    return stats;
   } catch {
     return {
       completedChallenges: [],
       totalXP: 0,
       streak: 0,
-      lastActivityDate: ''
+      lastActivityDate: '',
+      earnedBadges: [],
+      level: 1
     };
   }
 }
 
-export function updateUserStats(xpReward: number, challengeId: number): void {
-  if (typeof window === 'undefined') return;
+export function updateUserStats(xpReward: number, challengeId: number): { newBadges: string[]; levelUp: boolean } {
+  if (typeof window === 'undefined') return { newBadges: [], levelUp: false };
   
   try {
     const stats = getUserStats();
     const today = new Date().toISOString().split('T')[0];
+    const oldLevel = stats.level || 1;
     
     // Update streak
     if (stats.lastActivityDate === today) {
@@ -115,9 +128,26 @@ export function updateUserStats(xpReward: number, challengeId: number): void {
       stats.completedChallenges.push(challengeId);
     }
     
+    // Calculate new level (simple calculation to avoid circular dependency)
+    const LEVEL_THRESHOLDS = [0, 100, 250, 450, 700, 1000, 1400, 1850, 2350, 3000];
+    for (let i = LEVEL_THRESHOLDS.length - 1; i >= 0; i--) {
+      if (stats.totalXP >= LEVEL_THRESHOLDS[i]) {
+        stats.level = Math.min(i + 1, 10);
+        break;
+      }
+    }
+    const levelUp = stats.level > oldLevel;
+    
     localStorage.setItem(STORAGE_KEY_STATS, JSON.stringify(stats));
+    
+    // Check for new badges - we'll do this synchronously by importing at the top
+    // For now, return empty array and let the component handle badge checking
+    const newBadges: string[] = [];
+    
+    return { newBadges, levelUp };
   } catch (error) {
     console.error('Failed to update user stats:', error);
+    return { newBadges: [], levelUp: false };
   }
 }
 

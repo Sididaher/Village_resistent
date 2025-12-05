@@ -32,6 +32,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const nextIndex = prev.currentAttackIndex + 1;
       const isCompleted = nextIndex >= attacks.length;
 
+      // Discover technologies when making good choices
+      if (isGoodChoice && typeof window !== 'undefined') {
+        const currentAttack = attacks[prev.currentAttackIndex];
+        if (currentAttack) {
+          const { discoverTechnologiesFromAttack } = require('../utils/technologies');
+          discoverTechnologiesFromAttack(currentAttack.id);
+        }
+      }
+
       return {
         score: newScore,
         hearts: newHearts,

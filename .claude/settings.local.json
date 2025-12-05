@@ -6,7 +6,8 @@
       "Bash(PORT=3001 npm run dev:*)",
       "Bash(tasklist:*)",
       "Bash(npx next dev -p 3001)",
-      "Bash(taskkill:*)"
+      "Bash(taskkill:*)",
+      "Bash(dir c:Usershpvillage-resdefi /B)"
     ],
     "deny": [],
     "ask": []

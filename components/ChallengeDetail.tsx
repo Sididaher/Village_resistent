@@ -3,6 +3,8 @@
 import { useState, useEffect } from 'react';
 import { Challenge } from '@/lib/types/challenge';
 import { getChallengeProgress, saveChallengeProgress, updateUserStats, isChallengeCompleted } from '@/lib/utils/challengeStorage';
+import { checkAndAwardBadges, getBadge } from '@/lib/utils/badgeSystem';
+import { getUserLevel } from '@/lib/utils/levelSystem';
 import Link from 'next/link';
 
 interface ChallengeDetailProps {
@@ -16,6 +18,8 @@ export default function ChallengeDetail({ challenge }: ChallengeDetailProps) {
   const [isCompleted, setIsCompleted] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [newBadges, setNewBadges] = useState<string[]>([]);
+  const [levelUp, setLevelUp] = useState(false);
 
   useEffect(() => {
     // Load saved progress
@@ -90,16 +94,22 @@ export default function ChallengeDetail({ challenge }: ChallengeDetailProps) {
     };
     
     saveChallengeProgress(progress);
-    updateUserStats(challenge.xpReward, challenge.id);
+    const { newBadges: earnedBadges, levelUp: leveledUp } = updateUserStats(challenge.xpReward, challenge.id);
+    
+    // Check for badges after stats are updated (localStorage is synchronous, so this works immediately)
+    const newlyEarnedBadges = checkAndAwardBadges();
+    const allNewBadges = [...earnedBadges, ...newlyEarnedBadges];
     
     setIsCompleted(true);
+    setNewBadges(allNewBadges);
+    setLevelUp(leveledUp);
     setShowCelebration(true);
     setIsSubmitting(false);
     
-    // Hide celebration after 5 seconds
+    // Hide celebration after 7 seconds (longer if badges/level up)
     setTimeout(() => {
       setShowCelebration(false);
-    }, 5000);
+    }, allNewBadges.length > 0 || leveledUp ? 7000 : 5000);
   };
 
   const getDifficultyColor = (difficulty: string) => {
@@ -126,10 +136,28 @@ export default function ChallengeDetail({ challenge }: ChallengeDetailProps) {
 
   return (
     <div className="max-w-4xl mx-auto">
+      {/* Top Navigation */}
+      <div className="mb-6 flex items-center justify-between gap-4">
+        <Link
+          href="/challenges"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-white text-gray-700 font-semibold rounded-lg shadow-md hover:shadow-lg hover:bg-gray-50 transition-all border-2 border-gray-200"
+        >
+          <span>←</span>
+          <span>All Challenges</span>
+        </Link>
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all"
+        >
+          <span>📊</span>
+          <span>Dashboard</span>
+        </Link>
+      </div>
+
       {/* Celebration Animation */}
       {showCelebration && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-8 md:p-12 text-center shadow-2xl max-w-md mx-4 animate-bounce">
+          <div className="bg-white rounded-2xl p-8 md:p-12 text-center shadow-2xl max-w-lg mx-4 animate-bounce">
             <div className="text-7xl md:text-8xl mb-4">🎉</div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
               Challenge Complete!
@@ -137,6 +165,33 @@ export default function ChallengeDetail({ challenge }: ChallengeDetailProps) {
             <div className="text-5xl md:text-6xl font-bold text-green-600 mb-4">
               +{challenge.xpReward} XP
             </div>
+            
+            {levelUp && (
+              <div className="mb-4 p-4 bg-gradient-to-r from-purple-100 to-pink-100 rounded-xl border-2 border-purple-400">
+                <div className="text-4xl mb-2">⭐</div>
+                <p className="text-xl font-bold text-purple-900">LEVEL UP!</p>
+                <p className="text-sm text-purple-700">You've reached a new level!</p>
+              </div>
+            )}
+            
+            {newBadges.length > 0 && (
+              <div className="mb-4 p-4 bg-gradient-to-r from-yellow-100 to-amber-100 rounded-xl border-2 border-yellow-400">
+                <div className="text-4xl mb-2">🏆</div>
+                <p className="text-lg font-bold text-yellow-900 mb-2">New Badge Earned!</p>
+                <div className="space-y-2">
+                  {newBadges.map(badgeId => {
+                    const badge = getBadge(badgeId);
+                    return badge ? (
+                      <div key={badgeId} className="flex items-center justify-center gap-2">
+                        <span className="text-2xl">{badge.icon}</span>
+                        <span className="font-semibold text-yellow-900">{badge.name}</span>
+                      </div>
+                    ) : null;
+                  })}
+                </div>
+              </div>
+            )}
+            
             <p className="text-lg text-gray-700 mb-6">
               Great job completing this challenge! Your XP has been added to your total.
             </p>
@@ -359,13 +414,28 @@ export default function ChallengeDetail({ challenge }: ChallengeDetailProps) {
         )}
       </div>
 
-      {/* Back Button */}
-      <div className="text-center">
+      {/* Navigation Buttons */}
+      <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
         <Link
           href="/challenges"
-          className="inline-block px-6 py-3 bg-gray-100 text-gray-800 font-bold rounded-xl hover:bg-gray-200 transition-all"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
         >
-          ← Back to All Challenges
+          <span>🎯</span>
+          <span>Browse More Challenges</span>
+        </Link>
+        <Link
+          href="/learn"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+        >
+          <span>📚</span>
+          <span>Learn NIRD</span>
+        </Link>
+        <Link
+          href="/dashboard"
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 bg-gradient-to-r from-green-500 to-emerald-500 text-white font-bold rounded-xl shadow-lg hover:shadow-2xl hover:scale-105 transition-all"
+        >
+          <span>📊</span>
+          <span>View Progress</span>
         </Link>
       </div>
     </div>
